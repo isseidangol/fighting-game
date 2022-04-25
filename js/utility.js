@@ -15,9 +15,12 @@ function endgame(){
     }
     else if(player.health > enemy.health){
         document.querySelector('#result').innerHTML = 'Player 1 wins';
+        enemy.switchSprite('death');
+        enemy.dead = true;
     }
     else if(player.health < enemy.health){
         document.querySelector('#result').innerHTML = 'Player 2 wins';
+        player.switchSprite('death');
     }
     
 }

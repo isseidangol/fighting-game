@@ -38,34 +38,50 @@ const player = new Fighter({
         x:0,
         y:0
     },
-    imageSrc : './Hero Knight/Sprites/Idle.png',
+    imageSrc : './Fantasy Warrior/Sprites/Idle.png',
     frameMax : 11,
-    scale:1.8,
+    scale:2.6,
     offset:{
-        x:90,
-        y:58
+        x:180,
+        y:112
     },
     sprites:{
         idle:{
-            imageSrc:'./Hero Knight/Sprites/Idle.png',
-            frameMax:11
+            imageSrc:'./Fantasy Warrior/Sprites/Idle.png',
+            frameMax:10
         },
         run:{
-            imageSrc:'./Hero Knight/Sprites/Run.png',
+            imageSrc:'./Fantasy Warrior/Sprites/Run.png',
             frameMax:8,
         },
         jump:{
-            imageSrc:'./Hero Knight/Sprites/Jump.png',
+            imageSrc:'./Fantasy Warrior/Sprites/Jump.png',
             frameMax:3,
         },
         fall:{
-            imageSrc:'./Hero Knight/Sprites/Fall.png',
+            imageSrc:'./Fantasy Warrior/Sprites/Fall.png',
             frameMax:3
         },
         attack1:{
-            imageSrc:'./Hero Knight/Sprites/Attack1.png',
+            imageSrc:'./Fantasy Warrior/Sprites/Attack3.png',
+            frameMax: 8
+        },
+        hit:{
+            imageSrc: './Fantasy Warrior/Sprites/Take hit.png',
+            frameMax:3
+        },
+        death:{
+            imageSrc:'./Fantasy Warrior/Sprites/Death.png',
             frameMax: 7
         }
+    },
+    attackbox:{
+        offset:{
+            x:0,
+            y:50
+        },
+        width:200,
+        height:50
     }
 }    
 );
@@ -87,7 +103,7 @@ const enemy = new Fighter({
     frameMax: 8,
     scale: 2.3,
     offset:{
-        x:95,
+        x:150,
         y:92
     },
     sprites:{
@@ -109,8 +125,24 @@ const enemy = new Fighter({
         },
         attack1:{
             imageSrc:'./Medieval King Pack 2/Sprites/Attack1.png',
-            frameMax:4,
+            frameMax:4
+        },
+        hit:{
+            imageSrc:'./Medieval King Pack 2/Sprites/Take Hit - white silhouette.png',
+            frameMax:4
+        },
+        death:{
+            imageSrc:'./Medieval King Pack 2/Sprites/Death.png',
+            frameMax:6
         }
+    },
+    attackbox:{
+        offset:{
+            x:-130,
+            y:50
+        },
+        width:130,
+        height:50
     }
 })
 
@@ -189,18 +221,27 @@ function animate(){
         if(collisiondetect({
             rectangle1:player,
             rectangle2:enemy
-        })&&player.isAttacking){
+        })&&player.isAttacking  && player.framesCurrent === 2){
             player.isAttacking = false;
             enemy.health -= 10;
+            enemy.switchSprite('hit');
             document.querySelector('#enemyHealth').style.width = enemy.health + '%';
         }
         if(collisiondetect({
             rectangle1:enemy,
             rectangle2:player
-        })&&enemy.isAttacking){
+        })&&enemy.isAttacking && enemy.framesCurrent === 2){
             enemy.isAttacking = false;
+            player.switchSprite('hit');
             player.health -= 10;
             document.querySelector('#playerHealth').style.width = player.health + '%';
+        }
+
+        //if the attack misses
+        if(enemy.isAttacking && enemy.framesCurrent === 2){
+            enemy.isAttacking = false;
+        }else if(player.isAttacking && player.framesCurrent ===2){
+            player.isAttacking = false;
         }
     
     //end game based on the health

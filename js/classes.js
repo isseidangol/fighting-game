@@ -42,6 +42,10 @@ class Sprite{
     }
 
     switchSprite(sprite){
+        if(this.image === this.sprites.death.image && this.frameCurrent < this.sprites.death.frameMax-1) return;
+
+        if(this.image === this.sprites.hit.image && this.framesCurrent <this.sprites.hit.frameMax-1) return; 
+
         if(this.image === this.sprites.attack1.image && this.framesCurrent < this.sprites.attack1.frameMax-1) return;
 
         switch(sprite){
@@ -80,6 +84,20 @@ class Sprite{
                     this.framesCurrent = 0;
                     }
                 break;
+            case 'hit':
+                if(this.image!== this.sprites.hit.image){
+                    this.image = this.sprites.hit.image;
+                    this.frameMax = this.sprites.hit.frameMax;
+                    this.framesCurrent = 0;
+                }
+                break;
+            case 'death':
+                if(this.image!== this.sprites.death.image){
+                    this.image = this.sprites.death.image;
+                    this.frameMax = this.sprites.death.frameMax;
+                    this.framesCurrent = 0;
+                }
+                break;
         }
     }
 }
@@ -93,7 +111,8 @@ class Fighter extends Sprite{
         frameMax = 1,
         scale =1,
         offset = {x:0, y:0},
-        sprites
+        sprites,
+        attackbox = {offset:{}, width :undefined, height:undefined}
     }){
         super({
             position,
@@ -130,17 +149,23 @@ class Fighter extends Sprite{
                 x: this.position.x,
                 y: this.position.y
             },
-            offset,
-            width : 100,
-            height : 50
+            offset:attackbox.offset,
+            width :attackbox.width,
+            height : attackbox.height
         }
     }
 
     update(){
         this.draw();
+        // if(!this.dead){
         this.animateFrames();
+        // }
+
         this.attackbox.position.x = this.position.x + this.attackbox.offset.x;
-        this.attackbox.position.y = this.position.y;
+        this.attackbox.position.y = this.position.y +this.attackbox.offset.y;
+
+        // context.fillStyle ='red';
+        // context.fillRect(this.attackbox.position.x, this.attackbox.position.y, this.attackbox.width, this.attackbox.height);
 
         this.position.x += this.velocity.x;
         this.position.y += this.velocity.y;
@@ -153,12 +178,11 @@ class Fighter extends Sprite{
         }else{
         this.velocity.y += gravity;
         } 
+        context.fillStyle = 'red';
+        // context.fillRect(this.position.x,this.position.y,this.width,this.height);
     }
     attack(){
         this.isAttacking = true;
         this.switchSprite('attack1');
-            setTimeout(()=>{
-                this.isAttacking = false;
-            }, 100);
     }
 }
