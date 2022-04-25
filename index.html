@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        *{
+            box-sizing: border-box;
+        }
+    </style>
+    <title>fighting game</title>
+</head>
+<body>
+    <div style="position: relative; display: inline-block;">
+        <div style="position: absolute; width: 100%; display: flex; align-items: center; padding: 20px;">
+            <div style="position:relative; height: 35px;width: 100%; display: flex;">
+                <div style="background-color: yellow; width: 100%;"></div>
+                <div 
+                    style="
+                        background-color: blue;      
+                        top: 0; 
+                        position: absolute;
+                        left: 0;
+                        height : 35px;
+                        width: 100%;"  
+                    id="playerHealth">
+                </div>
+            </div>
+            <div
+                id="timer" 
+                style="background-color: red; height: 100px; width: 100px; flex-shrink: 0; display: flex; justify-content: center; align-items: center;">
+                
+            </div>
+            <div style="position: relative; height:35px; width: 100%; display: flex;">
+                <div style="background-color: yellow; width:100%;"></div>
+                <div style="
+                    background-color: blue; 
+                    width:100%; 
+                    position: absolute; 
+                    height: 35px;
+                    top: 0; 
+                    left: 0;"  
+                    id="enemyHealth">
+                </div>
+            </div>
+        </div>
+        <div 
+            id="result" 
+            style="
+                position: absolute; 
+                color: white;
+                display: none;
+                justify-content: center;
+                align-items: center;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                right: 0;">
+            tie
+        </div>
+        <div>
+            <canvas></canvas>
+        </div>
+    </div>
+    <script src="./js/utility.js"></script>
+    <script src="./js/classes.js"></script>
+    <script src = 'fighting.js'></script>
+</body>
+</html>
