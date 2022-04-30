@@ -12,18 +12,20 @@ const background = new Sprite({
         x: 0,
         y: 0
     },
-    imageSrc:'./images/Background.png',
-    scale:3.19
+    imageSrc:'./images/Background_5.png',
+    scale:2.5,
+    opacity:0.4
 })
 
 const shop = new Sprite({
     position:{
-        x:570,
+        x:600,
         y:127
     },
-    imageSrc:'./images/shop_anim.png',
-    scale:2.9,
-    frameMax:6
+    imageSrc:'./images/house.png',
+    scale:3,
+    frameMax:6,
+    opacity: 0.5
 })
 const player = new Fighter({
     position:{
@@ -43,7 +45,7 @@ const player = new Fighter({
     scale:2.6,
     offset:{
         x:180,
-        y:112
+        y:103
     },
     sprites:{
         idle:{
@@ -104,7 +106,7 @@ const enemy = new Fighter({
     scale: 2.3,
     offset:{
         x:150,
-        y:92
+        y:83
     },
     sprites:{
         idle:{
@@ -173,6 +175,7 @@ function animate(){
     window.requestAnimationFrame(animate);
     context.fillStyle = 'black';
     context.fillRect(0, 0, canvas.width, canvas.height);
+    // context.globalAlpha = 0.4;
     background.update();
     shop.update();
     player.update();
@@ -201,11 +204,11 @@ function animate(){
 
     //enemy movement
         if(keys.ArrowLeft.pressed && enemy.lastKey == 'ArrowLeft'){
-            enemy.velocity.x = -5;
+            enemy.velocity.x = -7;
             enemy.switchSprite('run');
         }
         else if(keys.ArrowRight.pressed && enemy.lastKey == 'ArrowRight'){
-            enemy.velocity.x = 5;
+            enemy.velocity.x = 7;
             enemy.switchSprite('run');
         }else{
         enemy.switchSprite('idle');
@@ -223,7 +226,7 @@ function animate(){
             rectangle2:enemy
         })&&player.isAttacking  && player.framesCurrent === 2){
             player.isAttacking = false;
-            enemy.health -= 10;
+            enemy.health -= 20;
             enemy.switchSprite('hit');
             document.querySelector('#enemyHealth').style.width = enemy.health + '%';
         }

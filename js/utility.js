@@ -21,6 +21,7 @@ function endgame(){
     else if(player.health < enemy.health){
         document.querySelector('#result').innerHTML = 'Player 2 wins';
         player.switchSprite('death');
+        player.dead = true;
     }
     
 }
